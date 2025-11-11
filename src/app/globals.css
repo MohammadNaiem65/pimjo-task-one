@@ -4,6 +4,21 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --color-brand-100: #dae2ff;
+  --color-brand-200: #becdff;
+  --color-brand-300: #91aeff;
+  --color-brand-400: #5e84fc;
+  --color-brand-500: #3758f9;
+  --color-brand-600: #2237ee;
+  --color-brand-700: #1a25db;
+  --color-brand-800: #1c20b1;
+  --color-brand-900: #1c228c;
+  --color-brand-950: #161755;
+  --color-title: #1f2937;
+  --color-text: #374151;
+  --color-text-secondary: #6b7280;
+  --color-text-tertiary: #9ca3af;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -60,7 +75,7 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
+  --border: #ededed;
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
@@ -118,5 +133,11 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .max-content-width {
+    @apply max-w-[1456px];
   }
 }
