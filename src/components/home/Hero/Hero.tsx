@@ -15,7 +15,7 @@ export default function Hero() {
       </div>
 
       <Image
-        src={"/hero-img.png"}
+        src={"/mockups/hero-img.png"}
         alt=""
         width={1296}
         height={804}
