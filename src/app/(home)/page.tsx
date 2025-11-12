@@ -2,6 +2,8 @@ import AnnouncementBar from "@/components/home/AnnouncementBar";
 import Brands from "@/components/home/Brands/Brands";
 import Hero from "@/components/home/Hero/Hero";
 import Navbar from "@/components/home/Navbar/Navbar";
+import UIKitStats from "@/components/home/UIKitStats/UIKitStats";
+import ValuePropositions from "@/components/home/ValuePropositions/ValuePropositions";
 
 export default function HomePage() {
   return (
@@ -13,6 +15,10 @@ export default function HomePage() {
       <Hero />
 
       <Brands />
+
+      <UIKitStats />
+
+      <ValuePropositions />
     </main>
   );
 }
