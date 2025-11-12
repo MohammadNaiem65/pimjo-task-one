@@ -1,5 +1,5 @@
 import AnnouncementBar from "@/components/home/AnnouncementBar";
-import Navbar from "@/components/home/Navbar";
+import Navbar from "@/components/home/Navbar/Navbar";
 
 export default function HomePage() {
   return (
