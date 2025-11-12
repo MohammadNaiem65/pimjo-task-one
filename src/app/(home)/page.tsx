@@ -1,4 +1,5 @@
 import AnnouncementBar from "@/components/home/AnnouncementBar";
+import Brands from "@/components/home/Brands/Brands";
 import Hero from "@/components/home/Hero/Hero";
 import Navbar from "@/components/home/Navbar/Navbar";
 
@@ -10,6 +11,8 @@ export default function HomePage() {
       <Navbar />
 
       <Hero />
+
+      <Brands />
     </main>
   );
 }

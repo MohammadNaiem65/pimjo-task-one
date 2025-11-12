@@ -3,7 +3,7 @@ import HeroContent from "./HeroContent";
 
 export default function Hero() {
   return (
-    <section className="mb-10 h-331.5">
+    <section className="h-331.5">
       {/* Pattern section */}
       <div className="h-259 w-full border-b">
         <div className="diagonal-background-pattern max-content-width mx-auto h-full w-full border-x">

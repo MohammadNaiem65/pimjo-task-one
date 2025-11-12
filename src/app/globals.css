@@ -149,6 +149,6 @@
   }
 
   .pattern-section-content-width {
-    @apply w-full max-w-[1375px];
+    @apply mx-auto w-full max-w-[1375px];
   }
 }
