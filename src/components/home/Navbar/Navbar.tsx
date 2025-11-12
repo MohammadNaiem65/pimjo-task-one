@@ -27,7 +27,7 @@ export default function Navbar() {
               placeholder="Quick search..."
               className="border-0 pl-3 text-sm shadow-none focus-visible:ring-0"
             />
-            <Kbd className="flex h-[27px] w-[56px] items-center justify-center border border-[#F3F4F6] bg-background p-0 text-xs text-text-secondary">
+            <Kbd className="flex h-[27px] w-14 items-center justify-center border border-[#F3F4F6] bg-background p-0 text-xs text-text-secondary">
               ⌘ K
             </Kbd>
           </div>
