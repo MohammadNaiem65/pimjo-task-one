@@ -2,6 +2,7 @@ import AnnouncementBar from "@/components/home/AnnouncementBar";
 import Brands from "@/components/home/Brands/Brands";
 import Hero from "@/components/home/Hero/Hero";
 import Newsletter from "@/components/home/Newsletter/Newsletter";
+import Footer from "@/components/home/shared/Footer/Footer";
 import Navbar from "@/components/home/shared/Navbar/Navbar";
 import TemplateSection from "@/components/home/TemplateSection/TemplateSection";
 import TestimonialSection from "@/components/home/TestimonialSection/TestimonialSection";
@@ -28,6 +29,8 @@ export default function HomePage() {
       <TestimonialSection />
 
       <Newsletter />
+
+      <Footer />
     </main>
   );
 }
