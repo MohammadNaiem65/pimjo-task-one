@@ -155,11 +155,8 @@ function TemplateContent({ templateGroup }: { templateGroup: TemplateGroup }) {
       value={templateGroup.id}
       className="relative grid w-full grid-cols-3 gap-x-9 px-10"
     >
-      {templateGroup.templates.map((template) => (
-        <Card
-          key={template.img}
-          className="border-0 bg-transparent p-0 shadow-none"
-        >
+      {templateGroup.templates.map((template, index) => (
+        <Card key={index} className="border-0 bg-transparent p-0 shadow-none">
           <CardContent className="relative gap-6 p-0 pb-12">
             <Image
               src={template.img}
