@@ -3,6 +3,7 @@ import Brands from "@/components/home/Brands/Brands";
 import Hero from "@/components/home/Hero/Hero";
 import Navbar from "@/components/home/Navbar/Navbar";
 import TemplateSection from "@/components/home/TemplateSection/TemplateSection";
+import TestimonialSection from "@/components/home/TestimonialSection/TestimonialSection";
 import UIKitStats from "@/components/home/UIKitStats/UIKitStats";
 import ValuePropositions from "@/components/home/ValuePropositions/ValuePropositions";
 
@@ -22,6 +23,8 @@ export default function HomePage() {
       <ValuePropositions />
 
       <TemplateSection />
+
+      <TestimonialSection />
     </main>
   );
 }
