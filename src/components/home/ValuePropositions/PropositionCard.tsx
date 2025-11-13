@@ -71,7 +71,7 @@ export default function PropositionCard({
               <ChevronRight className="size-5" />
             </Button>
 
-            <Button className="h-11 cursor-pointer gap-x-2 rounded-xl border border-gray-600 bg-gray-800 py-3 text-sm font-medium text-white shadow-md hover:bg-gray-700 has-[>svg]:px-3.5">
+            <Button className="h-11 cursor-pointer gap-x-2 rounded-xl border border-gray-600 bg-gray-800 py-3 text-sm font-medium text-white shadow-md hover:bg-gray-700 has-[>svg]:px-4.5">
               <span>
                 <span>Buy Now</span>{" "}
                 <span className="text-white/72">- One-time</span>
