@@ -19,6 +19,8 @@
   --color-text-secondary: #6b7280;
   --color-text-tertiary: #9ca3af;
   --color-gray-secondary: #f3f4f6;
+  --color-label-text: #374151;
+  --color-input-placeholder: #9ca3af;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -150,5 +152,14 @@
 
   .pattern-section-content-width {
     @apply mx-auto w-full max-w-[1375px];
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
