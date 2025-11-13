@@ -2,6 +2,7 @@ import AnnouncementBar from "@/components/home/AnnouncementBar";
 import Brands from "@/components/home/Brands/Brands";
 import Hero from "@/components/home/Hero/Hero";
 import Navbar from "@/components/home/Navbar/Navbar";
+import Newsletter from "@/components/home/Newsletter/Newsletter";
 import TemplateSection from "@/components/home/TemplateSection/TemplateSection";
 import TestimonialSection from "@/components/home/TestimonialSection/TestimonialSection";
 import UIKitStats from "@/components/home/UIKitStats/UIKitStats";
@@ -25,6 +26,8 @@ export default function HomePage() {
       <TemplateSection />
 
       <TestimonialSection />
+
+      <Newsletter />
     </main>
   );
 }

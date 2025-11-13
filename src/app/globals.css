@@ -145,7 +145,7 @@
 
 @layer components {
   .diagonal-background-pattern {
-    @apply bg-[repeating-linear-gradient(-45deg,#ededed_0,#ededed_1px,transparent_0,transparent_50%)] bg-size-(--bg-size,10px_10px);
+    @apply bg-[repeating-linear-gradient(-45deg,var(--pattern-color,#ededed)_0,var(--pattern-color,#ededed)_1px,transparent_0,transparent_50%)] bg-size-(--bg-size,10px_10px);
   }
 
   .pattern-section-content-width {
