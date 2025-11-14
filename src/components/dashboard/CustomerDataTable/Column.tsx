@@ -9,6 +9,8 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogOverlay,
+  DialogPortal,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -141,41 +143,46 @@ export const columns: ColumnDef<CustomerData>[] = [
             </Button>
           </DialogTrigger>
 
-          <DialogContent className="flex w-138 flex-col items-center justify-center gap-y-6 rounded-[2.125rem] border-0 bg-gray-100 p-10 text-center sm:p-10">
-            <div className="mx-auto flex size-20 items-center justify-center rounded-full bg-linear-to-t from-[rgba(239,68,68,0)] to-[#ef44445e] text-red-500">
-              <span className="flex size-11 items-center justify-center rounded-full bg-white">
-                <IoIosWarning className="size-6" />
-              </span>
-            </div>
-            <DialogHeader className="gap-3 text-center">
-              <DialogTitle className="text-center text-2xl leading-8 font-medium text-text">
-                Remove User Confirmation
-              </DialogTitle>
-              <DialogDescription className="text-center text-sm leading-5 text-text-secondary">
-                Are you sure you want to remove this user? This action cannot be
-                undone and the user&apos;s access will be permanently revoked.
-              </DialogDescription>
-            </DialogHeader>
+          <DialogPortal>
+            <DialogOverlay className="bg-[rgba(55,65,81,0.8)]" />
 
-            <DialogFooter className="mt-1 flex h-12 w-full justify-center gap-3 sm:justify-center">
-              <DialogClose asChild>
-                <Button
-                  variant="outline"
-                  className="h-12 w-fit cursor-pointer rounded-xl border-[#E4E7EC] bg-white px-9.5 py-3 text-title"
-                >
-                  Cancel
-                </Button>
-              </DialogClose>
-              <DialogClose asChild>
-                <Button
-                  onClick={handleDelete}
-                  className="h-12 w-fit cursor-pointer rounded-xl border-0 bg-red-500 px-9.5 py-3 text-white hover:bg-red-700"
-                >
-                  Delete user
-                </Button>
-              </DialogClose>
-            </DialogFooter>
-          </DialogContent>
+            <DialogContent className="flex w-138 flex-col items-center justify-center gap-y-6 rounded-[2.125rem] border-0 bg-gray-100 p-10 text-center sm:p-10">
+              <div className="mx-auto flex size-20 items-center justify-center rounded-full bg-linear-to-t from-[rgba(239,68,68,0)] to-[#ef44445e] text-red-500">
+                <span className="flex size-11 items-center justify-center rounded-full bg-white">
+                  <IoIosWarning className="size-6" />
+                </span>
+              </div>
+              <DialogHeader className="gap-3 text-center">
+                <DialogTitle className="text-center text-2xl leading-8 font-medium text-text">
+                  Remove User Confirmation
+                </DialogTitle>
+                <DialogDescription className="text-center text-sm leading-5 text-text-secondary">
+                  Are you sure you want to remove this user? This action cannot
+                  be undone and the user&apos;s access will be permanently
+                  revoked.
+                </DialogDescription>
+              </DialogHeader>
+
+              <DialogFooter className="mt-1 flex h-12 w-full justify-center gap-3 sm:justify-center">
+                <DialogClose asChild>
+                  <Button
+                    variant="outline"
+                    className="h-12 w-fit cursor-pointer rounded-xl border-[#E4E7EC] bg-white px-9.5 py-3 text-title"
+                  >
+                    Cancel
+                  </Button>
+                </DialogClose>
+                <DialogClose asChild>
+                  <Button
+                    onClick={handleDelete}
+                    className="h-12 w-fit cursor-pointer rounded-xl border-0 bg-red-500 px-9.5 py-3 text-white hover:bg-red-700"
+                  >
+                    Delete user
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </DialogPortal>
         </Dialog>
       );
     },
