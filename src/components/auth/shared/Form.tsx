@@ -1,3 +1,4 @@
+import { socialSignIn } from "@/app/actions/authActions";
 import { Button } from "@/components/ui/button";
 import Divider from "@/components/ui/divider";
 import { Input } from "@/components/ui/input";
@@ -14,31 +15,44 @@ export default function AuthForm({ type }: AuthFormProps) {
   return (
     <section className="h-full border-x p-15">
       <div className="h-full w-138 rounded-[2.125rem] bg-gray-100 p-3">
-        <Button className="h-13 w-full cursor-pointer rounded-full bg-white hover:bg-gray-200">
-          <Image
-            src="/icons/google.svg"
-            alt="Google"
-            className="size-5"
-            width={20}
-            height={20}
-          />
-          <span className="text-sm/[1.25rem] font-medium text-[#0E121B]">
-            Continue with Google
-          </span>
-        </Button>
+        {/* Social logins */}
+        <Form action={socialSignIn}>
+          <Button
+            type="submit"
+            name="action"
+            value="google"
+            className="h-13 w-full cursor-pointer rounded-full bg-white hover:bg-gray-200"
+          >
+            <Image
+              src="/icons/google.svg"
+              alt="Google"
+              className="size-5"
+              width={20}
+              height={20}
+            />
+            <span className="text-sm/[1.25rem] font-medium text-[#0E121B]">
+              Continue with Google
+            </span>
+          </Button>
 
-        <Button className="mt-3 h-13 w-full cursor-pointer rounded-full bg-white hover:bg-gray-200">
-          <Image
-            src="/icons/github.svg"
-            alt="Github"
-            className="size-5"
-            width={20}
-            height={20}
-          />
-          <span className="text-sm/[1.25rem] font-medium text-[#0E121B]">
-            Continue with Github
-          </span>
-        </Button>
+          <Button
+            type="submit"
+            name="action"
+            value="github"
+            className="mt-3 h-13 w-full cursor-pointer rounded-full bg-white hover:bg-gray-200"
+          >
+            <Image
+              src="/icons/github.svg"
+              alt="Github"
+              className="size-5"
+              width={20}
+              height={20}
+            />
+            <span className="text-sm/[1.25rem] font-medium text-[#0E121B]">
+              Continue with Github
+            </span>
+          </Button>
+        </Form>
 
         <Divider
           color="#ededed"
