@@ -22,7 +22,7 @@ export default function Navbar() {
 
       <nav className="h-20.75 w-full border-y">
         <div className="max-content-width mx-auto flex h-full items-center justify-between border-x px-8">
-          <Image src={"/logo.png"} alt="logo" width={110} height={44} />
+          <Image src={"/logo.png"} alt="logo" width={110} height={44} preload />
 
           <div className="flex items-center justify-between gap-x-6">
             {/* Socials */}
@@ -81,7 +81,7 @@ function AccountDropdown() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         <Button className="h-10.5 cursor-pointer rounded-xl border border-black bg-gray-800 px-4.5 py-2.75 text-sm font-medium inset-shadow-[0px_16px_8px_0px_#1F1F1F03] hover:bg-gray-900">
           <FaCircleUser className="size-6" />
           <span>Account</span>
