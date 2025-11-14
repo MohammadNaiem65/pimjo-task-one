@@ -54,7 +54,7 @@ export default function MegaMenu({ items }: MegaMenuProps) {
 
   return (
     <NavigationMenu viewport={isMobile}>
-      <NavigationMenuList className="flex-wrap">
+      <NavigationMenuList className="relative z-10 flex-wrap">
         {items.map((item) =>
           item?.type === "mega" ? (
             <NavigationMenuItem key={item.id}>

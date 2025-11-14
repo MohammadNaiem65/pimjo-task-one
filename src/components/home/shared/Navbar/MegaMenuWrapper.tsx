@@ -7,8 +7,9 @@ export default async function MegaMenuWrapper() {
   const megaMenuItemsResponse = await fetch(
     "https://69102d7545e65ab24ac5d435.mockapi.io/mega-menu",
     {
+      cache: "force-cache",
       next: {
-        revalidate: 60 * 60 * 24 * 7, // 7 days
+        tags: ["mega-menu"], // Programmatically can be revalidated when needed
       },
     },
   );
