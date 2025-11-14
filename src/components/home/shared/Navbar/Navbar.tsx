@@ -1,3 +1,4 @@
+import { auth, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Kbd } from "@/components/ui/kbd";
@@ -7,7 +8,9 @@ import Link from "next/link";
 import { FaDiscord, FaXTwitter } from "react-icons/fa6";
 import MegaMenuWrapper from "./MegaMenuWrapper";
 
-export default function Navbar() {
+export default async function Navbar() {
+  const session = await auth();
+  console.log(session);
   return (
     <nav className="flex h-[83px] w-full items-center justify-center border-y">
       {/* Nav content */}
@@ -63,10 +66,27 @@ export default function Navbar() {
           </div>
 
           {/* Actions */}
-          <div className="space-x-4">
-            <Link href={"/sign-in"} className="text-sm font-medium text-text">
-              Sign in
-            </Link>
+          <div className="flex items-center space-x-4">
+            {session?.user ? (
+              <form
+                action={async () => {
+                  "use server";
+
+                  return await signOut();
+                }}
+              >
+                <button
+                  type="submit"
+                  className="cursor-pointer text-sm font-medium text-text"
+                >
+                  Log Out
+                </button>
+              </form>
+            ) : (
+              <Link href={"/sign-in"} className="text-sm font-medium text-text">
+                Sign in
+              </Link>
+            )}
 
             <Button className="h-10.5 cursor-pointer rounded-xl border border-black bg-gray-800 px-4.5 py-2.75 text-sm font-medium inset-shadow-[0px_16px_8px_0px_#1F1F1F03] hover:bg-gray-900">
               Pricing & FAQ

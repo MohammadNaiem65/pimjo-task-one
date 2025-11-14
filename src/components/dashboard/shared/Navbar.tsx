@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
 
+import { auth, signOut } from "@/auth";
 import { FaCircleUser } from "react-icons/fa6";
 
 export default function Navbar() {
@@ -63,7 +64,7 @@ export default function Navbar() {
   );
 }
 
-function AccountDropdown() {
+async function AccountDropdown() {
   const links = [
     {
       name: "Overview",
@@ -78,6 +79,8 @@ function AccountDropdown() {
       icon: "/icons/doc.svg",
     },
   ];
+
+  const session = await auth();
 
   return (
     <DropdownMenu>
@@ -97,10 +100,10 @@ function AccountDropdown() {
       >
         <DropdownMenuLabel className="px-4 py-3.5">
           <h4 className="text-base leading-6 font-medium text-title">
-            Musharoff Chowdhury
+            {session?.user?.name}
           </h4>
           <p className="mt-0.5 text-sm leading-5 text-text-secondary">
-            musharoff@gmail.com
+            {session?.user?.email}
           </p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -117,9 +120,25 @@ function AccountDropdown() {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem className="flex h-13 cursor-pointer items-center justify-start gap-x-3 rounded-[0.875rem] px-4">
-          <CiLogout className="size-6 text-gray-400" />
-          <span className="font-medium">Logout</span>
+        <DropdownMenuItem
+          className="flex h-13 cursor-pointer items-center justify-start gap-x-3 rounded-[0.875rem] px-0 py-0"
+          asChild
+        >
+          <form
+            action={async () => {
+              "use server";
+
+              return await signOut({ redirectTo: "/sign-in" });
+            }}
+          >
+            <button
+              type="submit"
+              className="flex h-full w-full cursor-pointer items-center justify-start gap-x-3 px-4 font-medium"
+            >
+              <CiLogout className="size-6 text-gray-400" />
+              Log Out
+            </button>
+          </form>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
