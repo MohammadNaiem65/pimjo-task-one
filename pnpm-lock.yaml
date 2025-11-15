@@ -14,9 +14,6 @@ importers:
       '@auth/core':
         specifier: 0.41.0
         version: 0.41.0
-      '@auth/supabase-adapter':
-        specifier: ^1.11.1
-        version: 1.11.1(@supabase/supabase-js@2.81.1)
       '@radix-ui/react-avatar':
         specifier: ^1.1.11
         version: 1.1.11(@types/react-dom@19.2.3(@types/react@19.2.4))(@types/react@19.2.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -95,6 +92,9 @@ importers:
       tailwind-merge:
         specifier: ^3.4.0
         version: 3.4.0
+      zod:
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.1.17
@@ -155,11 +155,6 @@ packages:
         optional: true
       nodemailer:
         optional: true
-
-  '@auth/supabase-adapter@1.11.1':
-    resolution: {integrity: sha512-Flsvg8TI4nNoqEWDqLqdO+xixY4jlzLPL3qqkjCxOMu/9AYGbDh409XFP9JdMy5Syu40iW1BcIWQ7DDJQiDgvQ==}
-    peerDependencies:
-      '@supabase/supabase-js': ^2.43.1
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
@@ -2785,15 +2780,6 @@ snapshots:
       oauth4webapi: 3.8.2
       preact: 10.24.3
       preact-render-to-string: 6.5.11(preact@10.24.3)
-
-  '@auth/supabase-adapter@1.11.1(@supabase/supabase-js@2.81.1)':
-    dependencies:
-      '@auth/core': 0.41.0
-      '@supabase/supabase-js': 2.81.1
-    transitivePeerDependencies:
-      - '@simplewebauthn/browser'
-      - '@simplewebauthn/server'
-      - nodemailer
 
   '@babel/code-frame@7.27.1':
     dependencies:
