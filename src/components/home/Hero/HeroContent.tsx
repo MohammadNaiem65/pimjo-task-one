@@ -50,24 +50,26 @@ export default function HeroContent() {
       </p>
 
       <div className="mt-8 flex items-center gap-x-3">
-        <Button className="h-11 cursor-pointer gap-x-2 rounded-xl border bg-transparent py-3 text-sm font-medium text-title has-[>svg]:px-3.5">
-          <Image src="/icons/figma.png" alt="" width={24} height={24} />
-          <span>
-            <span>Preview</span>{" "}
-            <span className="text-text-secondary">- Figma</span>
-          </span>
+        <Link href="/dashboard">
+          <Button className="h-11 cursor-pointer gap-x-2 rounded-xl border bg-transparent py-3 text-sm font-medium text-title has-[>svg]:px-3.5">
+            <Image src="/icons/figma.png" alt="" width={24} height={24} />
+            <span>
+              <span>Preview</span>{" "}
+              <span className="text-text-secondary">- Figma</span>
+            </span>
+            <ChevronRight className="size-5" />
+          </Button>
+        </Link>
 
-          <ChevronRight className="size-5" />
-        </Button>
-
-        <Button className="h-11 cursor-pointer gap-x-2 rounded-xl border border-brand-600 bg-brand-600 py-3 text-sm font-medium text-white hover:bg-brand-700 has-[>svg]:px-3.5">
-          <span>
-            <span>Buy Now</span>{" "}
-            <span className="text-white/72">- One-time</span>
-          </span>
-
-          <ChevronRight className="size-5" />
-        </Button>
+        <Link href="/dashboard">
+          <Button className="h-11 cursor-pointer gap-x-2 rounded-xl border border-brand-600 bg-brand-600 py-3 text-sm font-medium text-white hover:bg-brand-700 has-[>svg]:px-3.5">
+            <span>
+              <span>Buy Now</span>{" "}
+              <span className="text-white/72">- One-time</span>
+            </span>
+            <ChevronRight className="size-5" />
+          </Button>
+        </Link>
       </div>
     </div>
   );
