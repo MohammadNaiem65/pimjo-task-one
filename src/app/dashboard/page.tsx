@@ -7,7 +7,9 @@ import { AlertCircleIcon } from "lucide-react";
 import { toast } from "sonner";
 
 export default async function DashboardPage() {
-  const res = await fetch("https://69102d7545e65ab24ac5d435.mockapi.io/users");
+  const res = await fetch("https://69102d7545e65ab24ac5d435.mockapi.io/users", {
+    cache: "no-cache", // Preventing caching as dashboard page data always changes
+  });
 
   if (!res.ok) {
     return toast.custom(() => (

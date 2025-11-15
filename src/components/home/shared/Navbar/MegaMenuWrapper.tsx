@@ -7,9 +7,9 @@ export default async function MegaMenuWrapper() {
   const megaMenuItemsResponse = await fetch(
     "https://69102d7545e65ab24ac5d435.mockapi.io/mega-menu",
     {
-      cache: "force-cache",
+      cache: "force-cache", // As mega menu items are generally static, we can force cache
       next: {
-        tags: ["mega-menu"], // Programmatically can be revalidated when needed
+        tags: ["mega-menu"], // We can use tags to revalidate the cache when needed, also time based revalidation can be used according to requirements
       },
     },
   );
