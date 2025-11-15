@@ -1,4 +1,4 @@
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Kbd } from "@/components/ui/kbd";
@@ -6,11 +6,11 @@ import { Github, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaDiscord, FaXTwitter } from "react-icons/fa6";
+import Logout from "./Logout";
 import MegaMenuWrapper from "./MegaMenuWrapper";
 
 export default async function Navbar() {
   const session = await auth();
-  console.log(session);
   return (
     <nav className="flex h-[83px] w-full items-center justify-center border-y">
       {/* Nav content */}
@@ -68,20 +68,7 @@ export default async function Navbar() {
           {/* Actions */}
           <div className="flex items-center space-x-4">
             {session?.user ? (
-              <form
-                action={async () => {
-                  "use server";
-
-                  return await signOut();
-                }}
-              >
-                <button
-                  type="submit"
-                  className="cursor-pointer text-sm font-medium text-text"
-                >
-                  Log Out
-                </button>
-              </form>
+              <Logout />
             ) : (
               <Link href={"/sign-in"} className="text-sm font-medium text-text">
                 Sign in

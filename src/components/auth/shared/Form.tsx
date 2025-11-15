@@ -1,6 +1,6 @@
 "use client";
 
-import { socialSignIn } from "@/app/actions/authActions";
+import { socialSignIn } from "@/app/_actions/authActions";
 import { Button } from "@/components/ui/button";
 import Divider from "@/components/ui/divider";
 import { Input } from "@/components/ui/input";

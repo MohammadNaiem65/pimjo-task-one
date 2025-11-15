@@ -52,7 +52,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return {
             id: data.user.id,
             email: data.user.email!,
-            name: profile?.full_name || data.user.email,
+            name: profile?.full_name || data.user.user_metadata.full_name,
             image: profile?.avatar_url || null,
           };
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -112,8 +112,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
   pages: {
-    signIn: "/login",
-    error: "/login",
+    signIn: "/sign-in",
+    error: "/sign-in",
   },
   session: {
     strategy: "jwt",

@@ -23,7 +23,15 @@ export default function Navbar() {
 
       <nav className="h-20.75 w-full border-y">
         <div className="max-content-width mx-auto flex h-full items-center justify-between border-x px-8">
-          <Image src={"/logo.png"} alt="logo" width={110} height={44} preload />
+          <Link href={"/"}>
+            <Image
+              src={"/logo.png"}
+              alt="logo"
+              width={110}
+              height={44}
+              preload
+            />
+          </Link>
 
           <div className="flex items-center justify-between gap-x-6">
             {/* Socials */}
