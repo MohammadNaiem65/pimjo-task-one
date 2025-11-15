@@ -3,7 +3,15 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import Image from "next/image";
 
-export default function HeaderSection() {
+interface HeaderSectionProps {
+  searchInput: string;
+  setSearchInput: (arg: string) => void;
+}
+
+export default function HeaderSection({
+  searchInput,
+  setSearchInput,
+}: HeaderSectionProps) {
   return (
     <div className="flex items-center justify-between p-6">
       <h3 className="text-lg leading-7 font-semibold text-title">All Users</h3>
@@ -13,6 +21,8 @@ export default function HeaderSection() {
         <div className="flex h-11 w-[320px] items-center rounded-lg border border-[#D0D5DD] py-[8.5px] pr-2.5 pl-4 text-text-tertiary">
           <Search className="size-5" />
           <Input
+            value={searchInput ?? ""}
+            onChange={(e) => setSearchInput(e.target.value)}
             placeholder="Search"
             className="border-0 pl-3 text-sm shadow-none focus-visible:ring-0"
           />

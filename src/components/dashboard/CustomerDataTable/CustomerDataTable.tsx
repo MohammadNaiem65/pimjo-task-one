@@ -4,6 +4,7 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   RowSelectionState,
   useReactTable,
@@ -17,22 +18,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { fuzzyFilter } from "@/lib/tableUtils";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { CustomerData } from "@/types";
+import { useEffect, useState } from "react";
 import HeaderSection from "./HeaderSection";
 import PaginationFooter from "./PaginationFooter";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+interface DataTableProps {
+  columns: ColumnDef<CustomerData, unknown>[];
+  data: CustomerData[];
 }
 
-export default function CustomerDataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
-  const [customerData, setCustomerData] = useState<TData[]>(data);
+export default function CustomerDataTable({ columns, data }: DataTableProps) {
+  const [customerData, setCustomerData] = useState<CustomerData[]>(data);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [globalFilter, setGlobalFilter] = useState<string>("");
+  const [searchInput, setSearchInput] = useState<string>("");
   const [pagination, setPagination] = useState<{
     pageIndex: number;
     pageSize: number;
@@ -63,14 +65,21 @@ export default function CustomerDataTable<TData, TValue>({
   };
 
   const table = useReactTable({
-    data: customerData,
     columns,
+    data: customerData,
+    filterFns: {
+      fuzzy: fuzzyFilter,
+    },
+    globalFilterFn: fuzzyFilter,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onGlobalFilterChange: setGlobalFilter,
     onPaginationChange: setPagination,
     onRowSelectionChange: setRowSelection,
     enableRowSelection: true,
     state: {
+      globalFilter,
       pagination,
       rowSelection,
     },
@@ -79,9 +88,21 @@ export default function CustomerDataTable<TData, TValue>({
     },
   });
 
+  // Debounce: wait 300ms after user stops typing
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setGlobalFilter(searchInput);
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [searchInput]);
+
   return (
     <div className="mt-6 overflow-hidden rounded-2xl border bg-white">
-      <HeaderSection />
+      <HeaderSection
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+      />
 
       <Table>
         <TableHeader>

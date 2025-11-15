@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { fuzzyFilter } from "@/lib/tableUtils";
 import { cn } from "@/lib/utils";
 import { CustomerData } from "@/types";
 import type { ColumnDef, RowData } from "@tanstack/react-table";
@@ -60,6 +61,7 @@ export const columns: ColumnDef<CustomerData>[] = [
       );
     },
     enableHiding: false,
+    filterFn: fuzzyFilter
   },
   {
     id: "customer",
@@ -90,10 +92,12 @@ export const columns: ColumnDef<CustomerData>[] = [
         </div>
       );
     },
+    filterFn: fuzzyFilter
   },
   {
     accessorKey: "product",
     header: "Product/Service",
+    filterFn: fuzzyFilter
   },
   {
     accessorKey: "dealValue",
