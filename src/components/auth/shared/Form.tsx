@@ -1,17 +1,51 @@
+"use client";
+
 import { socialSignIn } from "@/app/actions/authActions";
 import { Button } from "@/components/ui/button";
 import Divider from "@/components/ui/divider";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 import Form from "next/form";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { useActionState, useEffect } from "react";
+import { toast } from "sonner";
+import { AuthFormState } from "./types";
 
 interface AuthFormProps {
   type: "sign-in" | "sign-up";
+  action: (
+    _prevState: AuthFormState,
+    formData: FormData,
+  ) => Promise<AuthFormState>;
 }
 
-export default function AuthForm({ type }: AuthFormProps) {
+export default function AuthForm({ type, action }: AuthFormProps) {
+  const actionInitialState: AuthFormState = {
+    error: undefined,
+    success: undefined,
+    fieldErrors: {},
+  };
+
+  const [state, formAction, isPending] = useActionState(
+    action,
+    actionInitialState,
+  );
+
+  useEffect(() => {
+    if (state.success === "You have successfully signed in") {
+      toast.success("You have successfully signed in");
+
+      redirect("/dashboard");
+    } else if (state.success === "You have successfully signed up") {
+      toast.success("You have successfully signed up");
+
+      redirect("/sign-in");
+    }
+  }, [state.success]);
+
   return (
     <section className="h-full border-x p-15">
       <div className="h-full w-138 rounded-[2.125rem] bg-gray-100 p-3">
@@ -63,7 +97,7 @@ export default function AuthForm({ type }: AuthFormProps) {
         </Divider>
 
         <Form
-          action=""
+          action={formAction}
           className="flex flex-col gap-y-5 rounded-3xl bg-white p-8"
         >
           {/* Name */}
@@ -78,9 +112,24 @@ export default function AuthForm({ type }: AuthFormProps) {
 
               <Input
                 id="name"
+                name="name"
                 type="text"
-                className="mt-2 h-12 rounded-xl px-4 py-3.5 text-sm leading-5 text-input-placeholder focus-visible:border-brand-300 focus-visible:ring-brand-300"
+                placeholder="Enter your name"
+                disabled={isPending}
+                aria-invalid={Boolean(state.fieldErrors?.name)}
+                aria-describedby="name-error"
+                className={cn(
+                  "mt-2 h-12 rounded-xl px-4 py-3.5 text-sm leading-5 text-input-placeholder focus-visible:border-brand-300 focus-visible:ring-brand-300",
+                  state.fieldErrors?.name &&
+                    "border-red-300 focus-visible:border-red-400 focus-visible:ring-red-400",
+                )}
               />
+
+              {state.fieldErrors?.name ? (
+                <p className="mt-2 text-sm text-red-600" role="alert">
+                  {state.fieldErrors.name}
+                </p>
+              ) : null}
             </div>
           )}
 
@@ -94,10 +143,25 @@ export default function AuthForm({ type }: AuthFormProps) {
             </Label>
             <Input
               id="email"
+              name="email"
               type="email"
               placeholder="Enter your email"
-              className="mt-2 h-12 rounded-xl px-4 py-3.5 text-sm leading-5 text-input-placeholder focus-visible:border-brand-300 focus-visible:ring-brand-300"
+              disabled={isPending}
+              aria-invalid={Boolean(state.fieldErrors?.email)}
+              aria-describedby="email-error"
+              required
+              className={cn(
+                "mt-2 h-12 rounded-xl px-4 py-3.5 text-sm leading-5 text-input-placeholder focus-visible:border-brand-300 focus-visible:ring-brand-300",
+                state.fieldErrors?.email &&
+                  "border-red-300 focus-visible:border-red-400 focus-visible:ring-red-400",
+              )}
             />
+
+            {state.fieldErrors?.email ? (
+              <p className="mt-2 text-sm text-red-600" role="alert">
+                {state.fieldErrors.email}
+              </p>
+            ) : null}
           </div>
 
           {/* Password */}
@@ -110,10 +174,25 @@ export default function AuthForm({ type }: AuthFormProps) {
             </Label>
             <Input
               id="password"
+              name="password"
               type="password"
               placeholder="Enter your password"
-              className="mt-2 h-12 rounded-xl px-4 py-3.5 text-sm leading-5 text-input-placeholder focus-visible:border-brand-300 focus-visible:ring-brand-300"
+              disabled={isPending}
+              aria-invalid={Boolean(state.fieldErrors?.password)}
+              aria-describedby="password-error"
+              required
+              className={cn(
+                "mt-2 h-12 rounded-xl px-4 py-3.5 text-sm leading-5 text-input-placeholder focus-visible:border-brand-300 focus-visible:ring-brand-300",
+                state.fieldErrors?.password &&
+                  "border-red-300 focus-visible:border-red-400 focus-visible:ring-red-400",
+              )}
             />
+
+            {state.fieldErrors?.password ? (
+              <p className="mt-2 text-sm text-red-600" role="alert">
+                {state.fieldErrors.password}
+              </p>
+            ) : null}
           </div>
 
           {type === "sign-in" && (
@@ -125,11 +204,24 @@ export default function AuthForm({ type }: AuthFormProps) {
             </p>
           )}
 
+          {state?.error && (
+            <div className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
+              {state.error}
+            </div>
+          )}
+
           <Button
             type="submit"
-            className="mt-1 h-11 cursor-pointer gap-x-2 rounded-xl border border-brand-600 bg-brand-600 py-3 text-sm font-medium text-white hover:bg-brand-700 has-[>svg]:px-3.5"
+            disabled={isPending}
+            className="mt-1 h-11 cursor-pointer gap-x-2 rounded-xl border border-brand-600 bg-brand-600 py-3 text-sm font-medium text-white hover:bg-brand-700 disabled:cursor-not-allowed disabled:bg-brand-600/70 disabled:text-brand-600/50 has-[>svg]:px-3.5"
           >
-            {type === "sign-in" ? "Sign In" : "Sign Up"}
+            {isPending
+              ? type === "sign-in"
+                ? "Signing In..."
+                : "Signing Up..."
+              : type === "sign-in"
+                ? "Sign In"
+                : "Sign Up"}
           </Button>
 
           {type === "sign-in" ? (

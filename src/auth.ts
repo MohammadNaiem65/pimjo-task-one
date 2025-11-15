@@ -1,96 +1,121 @@
-import { createClient } from "@supabase/supabase-js";
-import bcrypt from "bcrypt";
+import { supabaseAdmin } from "@/lib/supabase/server";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
+import { z } from "zod";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-);
+const credentialsSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1),
+});
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  // Remove the adapter entirely
-
   providers: [
-    GitHub({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
 
-    Google({
-      clientId: process.env.GOOGLE_ID!,
-      clientSecret: process.env.GOOGLE_SECRET!,
+    GitHub({
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     }),
 
     Credentials({
-      name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials) {
-        const { email, password } = credentials as {
-          email?: string;
-          password?: string;
-        };
+        try {
+          const { email, password } = credentialsSchema.parse(credentials);
 
-        if (!email || !password) return null;
+          // Sign in with Supabase Auth
+          const { data, error } = await supabaseAdmin.auth.signInWithPassword({
+            email,
+            password,
+          });
 
-        const { data } = await supabase
-          .from("auth_credentials")
-          .select("*")
-          .eq("email", email)
-          .single();
+          if (error || !data.user) {
+            return null;
+          }
 
-        if (!data) return null;
+          // Get profile data
+          const { data: profile } = await supabaseAdmin
+            .from("profiles")
+            .select("full_name, avatar_url")
+            .eq("id", data.user.id)
+            .single();
 
-        const valid = await bcrypt.compare(password, data.password_hash);
-        if (!valid) return null;
-
-        return {
-          id: data.user_id,
-          email,
-          name: email,
-        };
+          return {
+            id: data.user.id,
+            email: data.user.email!,
+            name: profile?.full_name || data.user.email,
+            image: profile?.avatar_url || null,
+          };
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (error) {
+          return null;
+        }
       },
     }),
   ],
-
-  session: { strategy: "jwt" },
-
   callbacks: {
     async signIn({ user, account }) {
-      // Store OAuth users in your Supabase users table manually if needed
-      if (account?.provider === "google" || account?.provider === "github") {
-        const { error } = await supabase.from("users").upsert(
-          {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            image: user.image,
-          },
-          { onConflict: "email" },
-        );
+      // Handle OAuth providers (Google, GitHub)
+      if (account?.provider !== "credentials") {
+        try {
+          // Check if user already exists in Supabase Auth
+          const { data: existingUser } =
+            await supabaseAdmin.auth.admin.getUserById(user.id!);
 
-        if (error) console.error("Error storing user:", error);
+          if (!existingUser.user) {
+            // Create user in Supabase Auth
+            const { data: newUser, error: createError } =
+              await supabaseAdmin.auth.admin.createUser({
+                email: user.email!,
+                email_confirm: true,
+                user_metadata: {
+                  full_name: user.name,
+                  avatar_url: user.image,
+                  provider: account?.provider,
+                },
+              });
+
+            if (createError) {
+              return false;
+            }
+
+            user.id = newUser.user.id;
+          }
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (error) {
+          return false;
+        }
       }
+
       return true;
     },
-
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
       }
       return token;
     },
-
     async session({ session, token }) {
-      if (token.id && typeof token.id === "string") {
-        session.user.id = token.id;
+      if (session.user) {
+        session.user.id = token.id as string;
       }
       return session;
     },
+  },
+  pages: {
+    signIn: "/login",
+    error: "/login",
+  },
+  session: {
+    strategy: "jwt",
   },
 });
