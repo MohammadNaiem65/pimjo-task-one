@@ -15,11 +15,11 @@
 - [Design Decisions](#-design-decisions)
   - [Architecture](#architecture)
   - [Component Composition](#component-composition)
-- [Code Quality](#-code-quality)
+- [Project Structure](#-project-structure)
 - [Technologies Used](#-technologies-used)
+- [Code Quality](#-code-quality)
 - [Installation & Setup](#-installation--setup)
   - [Installation Steps](#installation-steps)
-- [Project Structure](#-project-structure)
 - [Author](#-author)
 - [License](#-license)
 
@@ -97,11 +97,31 @@ A live demo of the project can be found here: [https://pimjo-eta.vercel.app/](ht
 - Homepage: Homepage component composition can be found [here](./docs/component-compositions/home.readme.md).
 - Dashboard: Dashboard component composition can be found [here](./docs/component-compositions/dashboard.readme.md).
 
-## 🔍 Code Quality
+## 🏗️ Project Structure
 
-- **ESLint:** Configured for code linting
-- **Prettier:** Configured for code formatting
-- **Prettier Plugin Tailwind:** Configured for tailwind class sorting in a consistent order
+```
+project-root/
+├── public/               # Static assets (category-based: icons, products, mockups, etc.)
+├── src/
+│   ├── app/              # Next.js app router (routes, layout, global styles)
+│   ├── components/       # Reusable UI and feature
+│   │   ├── ui/       # Shadcn/ui components
+│   │   ├── route-group-based-folder/       # Route-group based components
+│   │   │   ├── shared/       # Shared components in a route group
+│   ├── hooks/            # Custom React hooks
+│   ├── lib/              # Library utils (auth, helpers, etc.)
+│   ├── types/            # TypeScript types
+│   ├── auth.ts           # Auth.js configuration
+│   ├── next-auth.d.ts    # Next-Auth type definitions
+│   └── proxy.ts          # Proxy configuration / helpers
+├── .env.local            # Local environment variables (not committed)
+├── components.json       # shadcn/ui configuration
+├── next.config.ts        # Next.js configuration
+├── package.json          # Project dependencies and scripts
+├── pnpm-lock.yaml        # Lockfile for pnpm
+├── tsconfig.json         # TypeScript configuration
+└── README.md             # Project documentation
+```
 
 ## 🚀 Technologies Used
 
@@ -109,6 +129,12 @@ A live demo of the project can be found here: [https://pimjo-eta.vercel.app/](ht
 - **Styling:** CSS3, Tailwind CSS
 - **API Integration:** Fetch API
 - **Other Libraries:** Auth.js, Supabase, Shadcn, Sonner
+
+## 🔍 Code Quality
+
+- **ESLint:** Configured for code linting
+- **Prettier:** Configured for code formatting
+- **Prettier Plugin Tailwind:** Configured for tailwind class sorting in a consistent order
 
 ## 📦 Installation & Setup
 
@@ -155,32 +181,6 @@ pnpm run dev
 ```
 
 5. Open your browser and navigate to `http://localhost:3000` (or specified port)
-
-## 🏗️ Project Structure
-
-```
-project-root/
-├── public/               # Static assets (category-based: icons, products, mockups, etc.)
-├── src/
-│   ├── app/              # Next.js app router (routes, layout, global styles)
-│   ├── components/       # Reusable UI and feature
-│   │   ├── ui/       # Shadcn/ui components
-│   │   ├── route-group-based-folder/       # Route-group based components
-│   │   │   ├── shared/       # Shared components in a route group
-│   ├── hooks/            # Custom React hooks
-│   ├── lib/              # Library utils (auth, helpers, etc.)
-│   ├── types/            # TypeScript types
-│   ├── auth.ts           # Auth.js configuration
-│   ├── next-auth.d.ts    # Next-Auth type definitions
-│   └── proxy.ts          # Proxy configuration / helpers
-├── .env.local            # Local environment variables (not committed)
-├── components.json       # shadcn/ui configuration
-├── next.config.ts        # Next.js configuration
-├── package.json          # Project dependencies and scripts
-├── pnpm-lock.yaml        # Lockfile for pnpm
-├── tsconfig.json         # TypeScript configuration
-└── README.md             # Project documentation
-```
 
 ## 👤 Author
 
